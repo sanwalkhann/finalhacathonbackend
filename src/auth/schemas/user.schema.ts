@@ -1,12 +1,5 @@
-/* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-
-export enum Role {
-  ADMIN = 'Admin',
-  WRITER = 'Writer',
-  USER = 'User',
-}
 
 @Schema({
   timestamps: true,
@@ -23,9 +16,6 @@ export class User {
   @ApiProperty({ description: 'The password of the user' })
   @Prop()
   password: string;
-
-  @Prop({ enum: Role, default: Role.USER })
-  role: Role;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

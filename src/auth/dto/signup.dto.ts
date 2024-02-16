@@ -1,8 +1,5 @@
-/* eslint-disable prettier/prettier */
-
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-
 
 export class SignUpDto {
   @ApiProperty({ description: 'Name', example: 'user name' })
@@ -20,9 +17,4 @@ export class SignUpDto {
   @IsString()
   @MinLength(8)
   readonly password: string;
-
-  @ApiProperty({ description: 'Password', example: '<PASSWORD>' })
-  @IsNotEmpty()
-  @IsString()
-  readonly role: string;
 }
