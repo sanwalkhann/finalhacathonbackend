@@ -11,18 +11,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     @InjectModel(User.name)
     private userModel: Model<User>,
   ) {
+    console.log('JWT_SECRET:', process.env.JWT_SECRET); 
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      //ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
     });
   }
 
   async validate(payload: any) {
     const { id } = payload;
+    console.log('Payload:', payload); // Logging for debugging
     const user = await this.userModel.findById(id);
     if (!user) {
-      throw new UnauthorizedException('login first');
+      throw new UnauthorizedException('User not found');
     }
     return user;
   }
