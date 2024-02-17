@@ -10,7 +10,7 @@ async function bootstrap() {
 
   // Define CORS options
   const corsOptions: CorsOptions = {
-    origin: ['http://localhost:3001'], // or specify your frontend URL(s) here
+    origin: ['https://finalhackathonfrontend.vercel.app'], // or specify your frontend URL(s) here
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // or specify the methods you need
     allowedHeaders: ['Content-Type', 'Authorization'], // or specify the headers you need
   };
