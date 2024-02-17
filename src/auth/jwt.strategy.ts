@@ -13,7 +13,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      //ignoreExpiration: false,
       secretOrKey: process.env.JWT_SECRET,
     });
   }
@@ -22,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const { id } = payload;
     const user = await this.userModel.findById(id);
     if (!user) {
-      throw new UnauthorizedException('login first');
+      throw new UnauthorizedException('Unauthorized: User not found');
     }
     return user;
   }
