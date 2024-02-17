@@ -39,23 +39,24 @@ export class AuthService {
   }
 
   //Login
-  async login(LogInDto: LoginDto): Promise<{ user: User; token: string }> {
-    const { email, password } = LogInDto;
+  async login(loginDto: LoginDto): Promise<{ user: User; token: string }> {
+    const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
       throw new UnauthorizedException('Invalid user');
     }
 
-    const isPasswordMatched =await bcrypt.compare(password, user.password);
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatched) {
       throw new UnauthorizedException('Invalid password');
     }
 
-    const token =await this.jwtService.sign({ id: user._id });
+    const token = this.jwtService.sign({ id: user._id });
     return { user, token };
   }
+}
 
   //Getting all users
   async findAll(): Promise<User[]> {
@@ -73,7 +74,7 @@ export class AuthService {
     return await this.userModel.findByIdAndDelete(id);
   }
 
-  async logout(token: string): Promise<void> {
+  async logout(_token: string): Promise<void> {
     return;
   }
 }
