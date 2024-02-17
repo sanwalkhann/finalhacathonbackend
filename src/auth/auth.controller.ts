@@ -8,7 +8,6 @@ import {
   Param,
   Post,
   Req,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -37,29 +36,19 @@ export class AuthController {
     return this.authService.signUp(signUpDto);
   }
 
-  // @Post('/login')
-  // @ApiOperation({
-  //   summary: 'User login',
-  //   description: 'Authenticate and generate a token for the user',
-  // })
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'User authenticated',
-  //   type: () => ({ token: String }),
-  // })
-  // @ApiResponse({ status: 401, description: 'Unauthorized' })
-  // login(@Body() Logindto: LoginDto): Promise<{ token: string }> {
-  //   return this.authService.login(Logindto);
-  // }
-
   @Post('/login')
-  async login(@Body() loginDto: LoginDto) {
-    try {
-      const result = await this.authService.login(loginDto);
-      return { token: result.token };
-    } catch (error) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+  @ApiOperation({
+    summary: 'User login',
+    description: 'Authenticate and generate a token for the user',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'User authenticated',
+    type: () => ({ token: String }),
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  login(@Body() Logindto: LoginDto): Promise<{ token: string }> {
+    return this.authService.login(Logindto);
   }
 
   @Get()
